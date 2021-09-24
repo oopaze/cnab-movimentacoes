@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'upload_movimentacao_view' %}"> Nova Movimentação</a>
+    <p>
+    </p>
+    {% if movimentacoes %}
+    <table>
+        {% for movimentacao in movimentacoes %}
+            <tr>
+                <td>{{ movimentacao.cpf }}</td>
+                <td>{{ movimentacao.valor }}</td>
+                <td>{{ movimentacao }}</td>
+                <td>{{ movimentacao.saldo }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# .... **Now the pagination section** .... #}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Anterior</a>
+                {% endif %}
+                <span class="page-current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Próxima</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+    {% else %}
+        <p>Nenhuma movimentação encontrada</p>
+    {% endif %}
+{% endblock %}
