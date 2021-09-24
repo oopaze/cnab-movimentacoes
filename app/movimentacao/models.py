@@ -21,7 +21,24 @@ class Movimentacao(models.Model):
     dono_loja = models.CharField("Dono da Loja", max_length=14)
     nome_loja = models.CharField("Nome da Loja", max_length=19)
 
+    def __str__(self):
+        tipo = self.get_tipo_display()
+        return f"{self.cpf} - {tipo} ({self.valor})"
+
     @property
     def natureza(self):
         is_saida = self.tipo in [2, 3, 9]
         return 'saida' if is_saida else 'entrada' 
+
+    @property
+    def saldo(self):
+        saldo = 0
+
+        movimentacoes = Movimentacao.objects.filter(cpf = self.cpf)
+        for movimentacao in movimentacoes:
+            if movimentacao.natureza == 'saida':
+                saldo -= float(movimentacao.valor)
+            else:
+                saldo += float(movimentacao.valor)
+        
+        return round(saldo, 2) 
