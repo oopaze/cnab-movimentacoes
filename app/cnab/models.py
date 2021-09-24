@@ -17,3 +17,8 @@ class Cnab(models.Model):
     hora = models.CharField("Hora (UTC-3)", max_length=6)
     dono_loja = models.CharField("Dono da Loja", max_length=14)
     nome_loja = models.CharField("Nome da Loja", max_length=19)
+
+    @property
+    def natureza(self):
+        is_saida = self.tipo in [2, 3, 9]
+        return 'saida' if is_saida else 'entrada' 
