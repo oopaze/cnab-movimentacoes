@@ -10,5 +10,5 @@ movimentacao_url = [
 ]
 
 urlpatterns = [
-    path("movimentacao", include(movimentacao_url), name="movimentacao")
+    path("movimentacao/", include(movimentacao_url), name="movimentacao")
 ]
