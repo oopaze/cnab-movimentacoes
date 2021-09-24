@@ -14,7 +14,6 @@ class MovimentacoesFileHandle(object):
         movimentacoes_lines = self.raw_file.split('\n')
 
         for movimentacao in movimentacoes_lines:
-            tipo = int(movimentacao[0])
             data = datetime.strptime(
                 movimentacao[1:9] + movimentacao[42:48], "%Y%m%d%H%M%S")
 
@@ -23,7 +22,7 @@ class MovimentacoesFileHandle(object):
             nome_loja = self.retira_espacos_em_branco(movimentacao[62:])
 
             movimentacao_list.append({
-                "tipo": tipo,
+                "tipo": movimentacao[0],
                 "data": data,
                 "valor": valor,
                 "cpf": movimentacao[20:30],

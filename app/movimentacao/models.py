@@ -27,14 +27,14 @@ class Movimentacao(models.Model):
 
     @property
     def natureza(self):
-        is_saida = self.tipo in [2, 3, 9]
+        is_saida = self.tipo in ["2", "3", "9"]
         return 'saida' if is_saida else 'entrada' 
 
     @property
     def saldo(self):
         saldo = 0
 
-        movimentacoes = Movimentacao.objects.filter(cpf = self.cpf)
+        movimentacoes = Movimentacao.objects.filter(cpf = self.cpf, data__lte=self.data)
         for movimentacao in movimentacoes:
             if movimentacao.natureza == 'saida':
                 saldo -= float(movimentacao.valor)
