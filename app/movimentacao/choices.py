@@ -1,22 +1,22 @@
 
-DEBITO = 'Débito'
-BOLETO = 'Boleto'
-FINANCIAMENTO = 'Financiamento'
-CREDITO = 'Crédito'
-RECEBIMENTO_EMPRESTIMO = 'Recebimento Empréstimo'
-VENDAS = 'Vendas'
-RECIMENTO_TED = 'Recebimento TED'
-RECEIMENTO_DOC = 'Recebimento DOC'
-ALUGUEL = 'Aluguel'
+DEBITO = 1
+BOLETO = 2
+FINANCIAMENTO = 3
+CREDITO = 4
+RECEBIMENTO_EMPRESTIMO = 5
+VENDAS = 6
+RECIMENTO_TED = 7
+RECEIMENTO_DOC = 8
+ALUGUEL = 9
 
 TIPO_TRANSACAO = (
-    (1, DEBITO),
-    (2, BOLETO),
-    (3, FINANCIAMENTO),
-    (4, CREDITO),
-    (5, RECEBIMENTO_EMPRESTIMO),
-    (6, VENDAS),
-    (7, RECEIMENTO_DOC),
-    (8, RECIMENTO_TED),
-    (9, ALUGUEL),
+    (DEBITO, "Débito"),
+    (BOLETO, "Boleto"),
+    (FINANCIAMENTO, "Financiamento"),
+    (CREDITO, "Crédito"),
+    (RECEBIMENTO_EMPRESTIMO, "Recebimento Empréstimo"),
+    (VENDAS, "Vendas"),
+    (RECEIMENTO_DOC, "Recebimento TED"),
+    (RECIMENTO_TED, "Recebimento"),
+    (ALUGUEL, "Aluguel"),
 )
