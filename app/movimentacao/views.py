@@ -1,6 +1,8 @@
-from django.http import request
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView
+from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import MovimentacoesUploadForm
 from .handlers.movimentacoes_reader import MovimentacoesFileHandle
@@ -10,7 +12,6 @@ from .models import Movimentacao
 class MovimentacoesListView(ListView):
     model = Movimentacao
     template_name = "movimentacao/movimentacao_list.html"
-    paginate_by = '10'
     context_object_name = 'movimentacoes'
     ordering = "cpf"
 
@@ -45,3 +46,24 @@ def upload_movimentacao_view(request):
     context = {'form': form}
 
     return render(request, "movimentacao/movimentacao_form.html", context)
+
+
+def get_movimentacao_info(request, id):
+    movimentacao = get_object_or_404(Movimentacao, id=id)
+
+    json_object = {
+        "dono_loja": movimentacao.dono_loja,
+        "nome_loja": movimentacao.nome_loja,
+        "valor": movimentacao.valor,
+        "cartao": movimentacao.cartao,
+        "cpf": movimentacao.cpf_formatado,
+        "data": movimentacao.data.strftime("%d/%m/%y às %H:%M"),
+        "natureza": movimentacao.natureza,
+        "saldo": movimentacao.saldo 
+    }
+
+    return JsonResponse({
+        "object": json_object,
+        "status_code": 200,
+        "success": True
+    })
