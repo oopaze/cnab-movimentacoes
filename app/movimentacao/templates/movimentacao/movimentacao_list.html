@@ -1,37 +1,108 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-    <a href="{% url 'upload_movimentacao_view' %}"> Nova Movimentação</a>
-    <p>
-    </p>
-    {% if movimentacoes %}
-    <table>
-        {% for movimentacao in movimentacoes %}
-            <tr>
-                <td>{{ movimentacao.cpf }}</td>
-                <td>{{ movimentacao.valor }}</td>
-                <td>{{ movimentacao }}</td>
-                <td>{{ movimentacao.saldo }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    {# .... **Now the pagination section** .... #}
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Anterior</a>
-                {% endif %}
-                <span class="page-current">
-                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Próxima</a>
-                {% endif %}
-            </span>
+    <div class="item-foco">
+        {% with object=movimentacoes.first %}
+            <div class="item">
+                <div class="top-secao">
+                    <div class="card">
+                        <span id="numero">{{ object.cartao }}</span>
+                        <div>
+                            <span id="validade">01/30</span>
+                            <span class="material-icons">
+                                account_balance
+                            </span>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <h4 id="saldo">R$ {{ object.saldo }}</h4>
+                        <div class="sub-info">
+                            <strong class="label" id="label_valor"> 
+                                Valor {% if object.natureza == 'saida' %}Pago{% else %}Recebido{% endif %}
+                            </strong>
+                            <span class="value" id="valor"> R$ {{ object.valor }} </span>
+                        </div>
+                        <div class="sub-info">
+                            <strong class="label"> CPF </strong>
+                            <span class="value" id="cpf"> {{ object.cpf_formatado }} </span>
+                        </div>
+                        <div class="sub-info">
+                            <strong class="label"> Destinatário </strong>
+                            <span class="value" id="destinatario"> {{ object.dono_loja }} </span>
+                        </div>
+                        <div class="sub-info">
+                            <strong class="label"> Local de Compra </strong>
+                            <span class="value" id="local-compra"> {{ object.nome_loja }} </span>
+                        </div>
+                        <div class="sub-info">
+                            <strong class="label"> Data de Compra </strong>
+                            <span class="value" id="data-compra"> {{ object.data|date:"d/m/y H:i" }} </span>
+                        </div>
+                        <div class="sub-info">
+                            <strong class="label"> Natureza </strong>
+                            <span class="value" id="natureza"> {{ object.natureza }} </span>
+                        </div>
+                        <div class="movimentacao">
+                            <div id="saidas"> 
+                                <span class="material-icons">
+                                    south_west
+                                </span>
+                                <strong id="saidas_value"> R$ {{ recebido }} </strong>
+                            </div>
+                            <div id="entradas">
+                                <span class="material-icons">
+                                    north_east
+                                </span>
+                                <strong id="entradas_value"> R$ {{ pago }} </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+    </div>
+
+    <!-- begin lita de items -->
+    <div class="lista-de-items">
+        <div class="add-secao">
+            <a href="{% url 'upload_movimentacao_view' %}"> Adicionar Movimentações </a>
         </div>
-    {% endif %}
-    {% else %}
-        <p>Nenhuma movimentação encontrada</p>
-    {% endif %}
+        {% for movimentacao in movimentacoes %}
+            <div class="item {% if forloop.counter == 1 %} active {% endif%}" item-data="{{ movimentacao.id }}">
+                <div class="icon {{ movimentacao.natureza }}">
+                    <span class="material-icons">
+                        {% if movimentacao.natureza == 'saida' %}
+                            remove
+                        {% else %}
+                            add
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="info">
+                    <span id="tipo"> {{ movimentacao.get_tipo_display }} </span>
+                    <span id="data"> {{ movimentacao.data|date:"d/m/y" }} </span>
+                </div>
+                <div class="blank-space"></div>
+                <div class="compra-info">
+                    <span id="valor"> 
+                        R$ {{ movimentacao.valor }} 
+                    </span>
+                    <span id="cpf"> {{ movimentacao.cpf_formatado }} </span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- end lita de items -->
+{% endblock %}
+
+{% block extra_js %}
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js" 
+      integrity="sha512-1Gn7//DzfuF67BGkg97Oc6jPN6hqxuZXnaTpC9P5uw8C6W4yUNj5hoS/APga4g1nO2X6USBb/rXtGzADdaVDeA==" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="{% static 'js/movimentacao.js' %}"></script>
 {% endblock %}

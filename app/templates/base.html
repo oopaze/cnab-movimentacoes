@@ -1,10 +1,26 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>ByCoders - Movimentações</title>
+
+        <!-- google fonts pre config -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <!-- import ubuntu, source sans pro google font -->
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+        
+        <!-- import google icones -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+           
+        <!-- import css principal -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
         <!-- começo do bloco extra_css -->
         {% block extra_css %}
@@ -14,8 +30,13 @@
 
     <body>
         <!-- começo do bloco content -->
-        {% block content %}
-        {% endblock %}
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
         <!-- final do bloco content -->
+
+        {% block extra_js %}
+        {% endblock %}
     </body>
 </html>
