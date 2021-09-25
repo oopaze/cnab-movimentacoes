@@ -13,14 +13,18 @@ class MovimentacoesListView(ListView):
     model = Movimentacao
     template_name = "movimentacao/movimentacao_list.html"
     context_object_name = 'movimentacoes'
-    ordering = "cpf"
+    ordering = ("cpf", "data")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        return ctx
 
-    def get_queryset(self):
-        return super().get_queryset()
+        valores = ctx['movimentacoes'].first().get_valor_entradas_saidas()
+        
+        ctx.update({
+            "recebido": valores['entradas'],
+            "pago": valores['saidas']
+        })
+        return ctx
 
 
 def upload_movimentacao_view(request):
@@ -51,15 +55,19 @@ def upload_movimentacao_view(request):
 def get_movimentacao_info(request, id):
     movimentacao = get_object_or_404(Movimentacao, id=id)
 
+    valores = movimentacao.get_valor_entradas_saidas()
+
     json_object = {
         "dono_loja": movimentacao.dono_loja,
         "nome_loja": movimentacao.nome_loja,
         "valor": movimentacao.valor,
         "cartao": movimentacao.cartao,
         "cpf": movimentacao.cpf_formatado,
-        "data": movimentacao.data.strftime("%d/%m/%y às %H:%M"),
+        "data": movimentacao.data.strftime("%d/%m/%y %H:%M"),
         "natureza": movimentacao.natureza,
-        "saldo": movimentacao.saldo 
+        "saldo": f"{movimentacao.saldo:.2f}",
+        "recebido": valores['entradas'],
+        "pago": valores['saidas']
     }
 
     return JsonResponse({
