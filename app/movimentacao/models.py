@@ -28,7 +28,13 @@ class Movimentacao(models.Model):
     @property
     def natureza(self):
         is_saida = self.tipo in ["2", "3", "9"]
-        return 'saida' if is_saida else 'entrada' 
+        return 'saida' if is_saida else 'entrada'
+
+    @property
+    def cpf_formatado(self):
+        return "{}.{}.{}-{}".format(
+            self.cpf[:3], self.cpf[3:6], self.cpf[6:9], self.cpf[9:]
+        )
 
     @property
     def saldo(self):
