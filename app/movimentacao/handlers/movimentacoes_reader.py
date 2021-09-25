@@ -25,7 +25,7 @@ class MovimentacoesFileHandle(object):
                 "tipo": movimentacao[0],
                 "data": data,
                 "valor": valor,
-                "cpf": movimentacao[20:30],
+                "cpf": movimentacao[19:30],
                 "cartao": movimentacao[30:42],
                 "dono_loja": dono,
                 "nome_loja": nome_loja,
