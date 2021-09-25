@@ -48,3 +48,17 @@ class Movimentacao(models.Model):
                 saldo += float(movimentacao.valor)
         
         return round(saldo, 2) 
+
+    def get_valor_entradas_saidas(self):
+        movimentacoes = Movimentacao.objects.filter(
+            cpf=self.cpf, 
+            data__lte=self.data
+        )
+
+        saidas = filter(lambda m: m.natureza == 'saida', movimentacoes)
+        entradas = filter(lambda m: m.natureza == 'entrada', movimentacoes)
+
+        return {
+            "entradas": sum([m.valor for m in entradas]),
+            "saidas": sum([m.valor for m in saidas])
+        }
