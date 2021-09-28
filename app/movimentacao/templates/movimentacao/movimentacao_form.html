@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+{% endblock %}
 
 {% block content %}
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Upload">
+        <h2> Upload Movimentações</h2>
+        <div class="form-content">
+            <h4> Upload seus arquivos CNAB aqui: </h4>
+            {{ form.file }}
+        </div>
+            <div class="buttons">
+            <button class="btn" type="submit"> Upload </button>
+            <a class="btn" href="{% url 'movimentacao_list' %}"> Voltar </a>
+        </div>
     </form>
 {% endblock %}
