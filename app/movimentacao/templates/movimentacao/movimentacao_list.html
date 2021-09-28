@@ -8,64 +8,75 @@
 
 {% block content %}
     <div class="item-foco">
-        {% with object=movimentacoes.first %}
-            <div class="item">
-                <div class="top-secao">
-                    <div class="card">
-                        <span id="numero">{{ object.cartao }}</span>
-                        <div>
-                            <span id="validade">01/30</span>
-                            <span class="material-icons">
-                                account_balance
-                            </span>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <h4 id="saldo">R$ {{ object.saldo }}</h4>
-                        <div class="sub-info">
-                            <strong class="label" id="label_valor"> 
-                                Valor {% if object.natureza == 'saida' %}Pago{% else %}Recebido{% endif %}
-                            </strong>
-                            <span class="value" id="valor"> R$ {{ object.valor }} </span>
-                        </div>
-                        <div class="sub-info">
-                            <strong class="label"> CPF </strong>
-                            <span class="value" id="cpf"> {{ object.cpf_formatado }} </span>
-                        </div>
-                        <div class="sub-info">
-                            <strong class="label"> Destinatário </strong>
-                            <span class="value" id="destinatario"> {{ object.dono_loja }} </span>
-                        </div>
-                        <div class="sub-info">
-                            <strong class="label"> Local de Compra </strong>
-                            <span class="value" id="local-compra"> {{ object.nome_loja }} </span>
-                        </div>
-                        <div class="sub-info">
-                            <strong class="label"> Data de Compra </strong>
-                            <span class="value" id="data-compra"> {{ object.data|date:"d/m/y H:i" }} </span>
-                        </div>
-                        <div class="sub-info">
-                            <strong class="label"> Natureza </strong>
-                            <span class="value" id="natureza"> {{ object.natureza }} </span>
-                        </div>
-                        <div class="movimentacao">
-                            <div id="saidas"> 
+        {% if movimentacoes.first %}
+            {% with object=movimentacoes.first %}
+                <div class="item">
+                    <div class="top-secao">
+                        <div class="card">
+                            <span id="numero">{{ object.cartao }}</span>
+                            <div>
+                                <span id="validade">01/30</span>
                                 <span class="material-icons">
-                                    south_west
+                                    account_balance
                                 </span>
-                                <strong id="saidas_value"> R$ {{ recebido }} </strong>
                             </div>
-                            <div id="entradas">
-                                <span class="material-icons">
-                                    north_east
-                                </span>
-                                <strong id="entradas_value"> R$ {{ pago }} </strong>
+                        </div>
+                        <div class="info">
+                            <h4 id="saldo">R$ {{ object.saldo }}</h4>
+                            <div class="sub-info">
+                                <strong class="label" id="label_valor"> 
+                                    Valor {% if object.natureza == 'saida' %}Pago{% else %}Recebido{% endif %}
+                                </strong>
+                                <span class="value" id="valor"> R$ {{ object.valor }} </span>
+                            </div>
+                            <div class="sub-info">
+                                <strong class="label"> CPF </strong>
+                                <span class="value" id="cpf"> {{ object.cpf_formatado }} </span>
+                            </div>
+                            <div class="sub-info">
+                                <strong class="label"> Destinatário </strong>
+                                <span class="value" id="destinatario"> {{ object.dono_loja }} </span>
+                            </div>
+                            <div class="sub-info">
+                                <strong class="label"> Local de Compra </strong>
+                                <span class="value" id="local-compra"> {{ object.nome_loja }} </span>
+                            </div>
+                            <div class="sub-info">
+                                <strong class="label"> Data de Compra </strong>
+                                <span class="value" id="data-compra"> {{ object.data|date:"d/m/y H:i" }} </span>
+                            </div>
+                            <div class="sub-info">
+                                <strong class="label"> Natureza </strong>
+                                <span class="value" id="natureza"> {{ object.natureza }} </span>
+                            </div>
+                            <div class="movimentacao">
+                                <div id="saidas"> 
+                                    <span class="material-icons">
+                                        south_west
+                                    </span>
+                                    <strong id="saidas_value"> R$ {{ recebido }} </strong>
+                                </div>
+                                <div id="entradas">
+                                    <span class="material-icons">
+                                        north_east
+                                    </span>
+                                    <strong id="entradas_value"> R$ {{ pago }} </strong>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            {% endwith %}
+        {% else %}
+            <div class="no-movimentacao">
+                <span class="material-icons">
+                    info
+                </span>
+                <h2> 
+                    Nenhuma movimentação adicionada 
+                </h2>
             </div>
-        {% endwith %}
+        {% endif %}
     </div>
 
     <!-- begin lita de items -->

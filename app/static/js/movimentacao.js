@@ -30,7 +30,7 @@ function writeData(data){
 }
 
 async function getMoreDetails(id){
-    return await fetch(`/movimentacao/${id}/`, {
+    return await fetch(`/${id}/`, {
         method: 'GET'
     }).then(
         (response) => response.json()

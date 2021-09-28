@@ -1,8 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView
-from django.forms.models import model_to_dict
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 from .forms import MovimentacoesUploadForm
 from .handlers.movimentacoes_reader import MovimentacoesFileHandle
@@ -18,12 +17,14 @@ class MovimentacoesListView(ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
-        valores = ctx['movimentacoes'].first().get_valor_entradas_saidas()
-        
-        ctx.update({
-            "recebido": valores['entradas'],
-            "pago": valores['saidas']
-        })
+        movimentacoes = ctx['movimentacoes']
+        if movimentacoes.exists():
+            valores = movimentacoes.first().get_valor_entradas_saidas()
+            ctx.update({
+                "recebido": valores['entradas'],
+                "pago": valores['saidas']
+            })
+
         return ctx
 
 
@@ -44,6 +45,8 @@ def upload_movimentacao_view(request):
                 )
 
             Movimentacao.objects.bulk_create(instances)
+
+            messages.success(request, "Movimentações criadas com sucesso.")
 
             return redirect("movimentacao_list")
 
