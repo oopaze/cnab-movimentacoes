@@ -53,7 +53,7 @@ activate ./.venv/bin/activate
 # Com a virtualenv ativada, não é necessário especificar 
 # a versão do python com 'python3 -m'
 # Instalando modulos que será usados pelo projeto
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 Ao fim desses comandos, é necessário configurar o banco de dados para o desejados. Segue um passo a passo de como fazer essa configuração:
