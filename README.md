@@ -48,7 +48,10 @@ Inicialmente clone o projeto e abra um terminal dentro da pasta. Neste terminal 
 # usado no projeto dos demais modulos
 python3 -m pip install virtualenv
 python3 -m virtualenv .venv
-activate ./.venv/bin/activate
+source ./.venv/bin/activate
+
+# Entrando na pasta do projeto
+cd app
 
 # Com a virtualenv ativada, não é necessário especificar 
 # a versão do python com 'python3 -m'
