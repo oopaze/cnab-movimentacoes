@@ -66,10 +66,10 @@ psql -U {username} -c "CREATE DATABASE {nome_do_banco}"
 Após essa linha, será necessário a digitação da senha do postgres. Se sua senha estiver correta, seu banco será criado. O próximo passo, é configurar a conexão do seu banco com o django. Para tal, abra o arquivo `.env.dev` que está na raiz da pasta `/app` com o seguinte comando:
 ```bash
 # Abrir com o Nano
-nano app/.env.dev
+nano .env.dev
 
 # Abrir com o vim
-vim app/.env.dev
+vim .env.dev
 ```
 Este arquivo é onde se localizam as variáveis que são responsáveis pela conexão com o banco de dados, mude-as de acordo com as suas credenciais. Segue um exemplo:
 ```bash
