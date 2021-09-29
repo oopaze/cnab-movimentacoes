@@ -1,5 +1,5 @@
 #!/bin/sh
-python3 manage.py collectstatic
-python3 manage.py migrate
+python manage.py collectstatic
+python manage.py migrate
 
 exec "$@"
